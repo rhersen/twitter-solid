@@ -1,7 +1,14 @@
+import { createResource } from "solid-js";
 import logo from "./logo.svg";
 import styles from "./App.module.css";
 
+async function fetchMarked() {
+  return (await fetch("/.netlify/functions/fauna")).json();
+}
+
 function App() {
+  const [marked] = createResource(fetchMarked);
+
   return (
     <div class={styles.App}>
       <header class={styles.header}>
@@ -9,14 +16,7 @@ function App() {
         <p>
           Edit <code>src/App.jsx</code> and save to reload.
         </p>
-        <a
-          class={styles.link}
-          href="https://github.com/ryansolid/solid"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Solid
-        </a>
+        { marked()?.id_str }
       </header>
     </div>
   );
