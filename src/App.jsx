@@ -24,7 +24,14 @@ function App() {
             : "Laddat."}
         </span>
         <ol>
-          <For each={tweets()}>{(tweet) => <li>{tweet.created_at}</li>}</For>
+          <For each={tweets()?.reverse()}>
+            {(tweet) => (
+              <li>
+                {tweet.created_at.substr(8, 8)} {tweet.user.screen_name}{" "}
+                {tweet.full_text}
+              </li>
+            )}
+          </For>
         </ol>
       </header>
     </div>
