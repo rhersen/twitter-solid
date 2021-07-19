@@ -6,8 +6,13 @@ async function fetchMarked() {
   return (await fetch("/.netlify/functions/fauna")).json();
 }
 
+async function fetchTweets({id_str}) {
+  return (await fetch(`/.netlify/functions/twitter?since_id=${id_str}`)).json();
+}
+
 function App() {
   const [marked] = createResource(fetchMarked);
+  const [tweets] = createResource(marked, fetchTweets);
 
   return (
     <div class={styles.App}>
@@ -16,7 +21,7 @@ function App() {
         <p>
           Edit <code>src/App.jsx</code> and save to reload.
         </p>
-        { marked()?.id_str }
+        { tweets() }
       </header>
     </div>
   );
