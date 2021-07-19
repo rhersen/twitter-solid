@@ -5,7 +5,7 @@ async function fetchMarked() {
   return (await fetch("/.netlify/functions/fauna")).json();
 }
 
-async function fetchTweets({id_str}) {
+async function fetchTweets({ id_str }) {
   return (await fetch(`/.netlify/functions/twitter?since_id=${id_str}`)).json();
 }
 
@@ -16,11 +16,15 @@ function App() {
   return (
     <div class={styles.App}>
       <header class={styles.header}>
-        <p>
-          Edit <code>src/App.jsx</code> and save to reload.
-        </p>
+        <span>
+          {tweets.loading
+            ? "Laddar twitter..."
+            : marked.loading
+            ? "Laddar fauna..."
+            : "Laddat."}
+        </span>
         <ol>
-          <For each={tweets()}>{tweet => <li>{tweet.created_at}</li>}</For>
+          <For each={tweets()}>{(tweet) => <li>{tweet.created_at}</li>}</For>
         </ol>
       </header>
     </div>
