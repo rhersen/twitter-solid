@@ -11,10 +11,15 @@ async function fetchTweets({ id_str }) {
 
 function Tweet(props) {
   return (
-    <li>
-      {props.tweet.created_at.substr(8, 8)}{" "}
-      <b>{props.tweet.user.screen_name}</b> {props.tweet.full_text}
-    </li>
+    <>
+      <div class="stats">
+        <hr />
+      </div>
+      <li>
+        {props.tweet.created_at.substr(8, 8)}{" "}
+        <b>{props.tweet.user.screen_name}</b> {props.tweet.full_text}
+      </li>
+    </>
   );
 }
 
@@ -32,11 +37,11 @@ function App() {
             ? "Laddar fauna..."
             : "Laddat."}
         </span>
-        <ol>
+        <ul>
           <For each={tweets()?.reverse()}>
             {(tweet) => <Tweet tweet={tweet} />}
           </For>
-        </ol>
+        </ul>
       </header>
     </div>
   );
