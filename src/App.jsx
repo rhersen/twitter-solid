@@ -12,9 +12,7 @@ async function fetchTweets({ id_str }) {
 function Tweet(props) {
   return (
     <>
-      <div class="stats">
-        <hr />
-      </div>
+      <hr />
       <li>
         {props.tweet.created_at.substr(8, 8)}{" "}
         <b>{props.tweet.user.screen_name}</b> {props.tweet.full_text}
@@ -29,20 +27,18 @@ function App() {
 
   return (
     <div class={styles.App}>
-      <header class={styles.header}>
-        <span>
+      <ul class="tweets">
+        <li>
           {tweets.loading
             ? "Laddar twitter..."
             : marked.loading
             ? "Laddar fauna..."
-            : "Laddat."}
-        </span>
-        <ul>
-          <For each={tweets()?.reverse()}>
-            {(tweet) => <Tweet tweet={tweet} />}
-          </For>
-        </ul>
-      </header>
+            : tweets().length}
+        </li>
+        <For each={tweets()?.reverse()}>
+          {(tweet) => <Tweet tweet={tweet} />}
+        </For>
+      </ul>
     </div>
   );
 }
