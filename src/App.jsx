@@ -9,6 +9,15 @@ async function fetchTweets({ id_str }) {
   return (await fetch(`/.netlify/functions/twitter?since_id=${id_str}`)).json();
 }
 
+function Tweet(props) {
+  return (
+    <li>
+      {props.tweet.created_at.substr(8, 8)}{" "}
+      <b>{props.tweet.user.screen_name}</b> {props.tweet.full_text}
+    </li>
+  );
+}
+
 function App() {
   const [marked] = createResource(fetchMarked);
   const [tweets] = createResource(marked, fetchTweets);
@@ -25,12 +34,7 @@ function App() {
         </span>
         <ol>
           <For each={tweets()?.reverse()}>
-            {(tweet) => (
-              <li>
-                {tweet.created_at.substr(8, 8)} {tweet.user.screen_name}{" "}
-                {tweet.full_text}
-              </li>
-            )}
+            {(tweet) => <Tweet tweet={tweet} />}
           </For>
         </ol>
       </header>
