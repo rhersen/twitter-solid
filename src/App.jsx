@@ -1,5 +1,4 @@
 import { createResource, For } from "solid-js";
-import styles from "./App.module.css";
 
 async function fetchMarked() {
   return (await fetch("/.netlify/functions/fauna")).json();
@@ -12,7 +11,10 @@ async function fetchTweets({ id_str }) {
 function Tweet(props) {
   return (
     <>
-      <hr />
+      <div class="stats">
+        <span class="countdown">mark</span>
+        <hr />
+      </div>
       <li>
         {props.tweet.created_at.substr(8, 8)}{" "}
         <i>
@@ -36,20 +38,16 @@ function App() {
   const [tweets] = createResource(marked, fetchTweets);
 
   return (
-    <div class={styles.App}>
-      <ul class="tweets">
-        <li>
-          {tweets.loading
-            ? "Laddar twitter..."
-            : marked.loading
-            ? "Laddar fauna..."
-            : tweets().length}
-        </li>
-        <For each={tweets()?.reverse()}>
-          {(tweet) => <Tweet tweet={tweet} />}
-        </For>
-      </ul>
-    </div>
+    <ul class="tweets">
+      <li>
+        {tweets.loading
+          ? "Laddar twitter..."
+          : marked.loading
+          ? "Laddar fauna..."
+          : tweets().length}
+      </li>
+      <For each={tweets()?.reverse()}>{(tweet) => <Tweet tweet={tweet} />}</For>
+    </ul>
   );
 }
 
