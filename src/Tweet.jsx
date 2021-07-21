@@ -1,4 +1,8 @@
 export default function Tweet(props) {
+  const tweet = props.tweet.retweeted_status
+    ? props.tweet.retweeted_status
+    : props.tweet;
+
   return (
     <>
       <div class="stats">
@@ -26,14 +30,18 @@ export default function Tweet(props) {
         <i>
           {props.tweet.retweeted_status ? props.tweet.user.screen_name : " "}
         </i>{" "}
-        <b>
-          {props.tweet.retweeted_status
-            ? props.tweet.retweeted_status.user.screen_name
-            : props.tweet.user.screen_name}
-        </b>{" "}
-        {props.tweet.retweeted_status
-          ? props.tweet.retweeted_status.full_text
-          : props.tweet.full_text}
+        <b>{tweet.user.screen_name}</b> {tweet.full_text}
+        <ol>
+          <For each={tweet.entities?.urls}>
+            {(url) => (
+              <li>
+                <a href={url.url} target="_blank">
+                  {url.display_url}
+                </a>
+              </li>
+            )}
+          </For>
+        </ol>
       </li>
     </>
   );
