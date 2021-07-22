@@ -5,7 +5,7 @@ export default function Tweet(props) {
   return (
     <>
       <div class="stats">
-        <span
+        <button
           class="countdown"
           onClick={async () => {
             console.log("PUT", props.tweet.id_str);
@@ -20,7 +20,7 @@ export default function Tweet(props) {
           }}
         >
           mark
-        </span>
+        </button>
         <hr />
       </div>
       <li>
