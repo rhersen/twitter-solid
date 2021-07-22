@@ -1,7 +1,6 @@
 export default function Tweet(props) {
-  const tweet = props.tweet.retweeted_status
-    ? props.tweet.retweeted_status
-    : props.tweet;
+  const tweet = () =>
+    props.tweet.retweeted_status ? props.tweet.retweeted_status : props.tweet;
 
   return (
     <>
@@ -29,9 +28,9 @@ export default function Tweet(props) {
         <i>
           {props.tweet.retweeted_status ? props.tweet.user.screen_name : " "}
         </i>{" "}
-        <b>{tweet.user.screen_name}</b> {tweet.full_text}
+        <b>{tweet().user.screen_name}</b> {tweet().full_text}
         <ol>
-          <For each={tweet.entities?.urls}>
+          <For each={tweet().entities?.urls}>
             {(url) => (
               <li>
                 <a href={url.url} target="_blank">
