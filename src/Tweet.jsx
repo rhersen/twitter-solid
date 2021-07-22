@@ -27,9 +27,9 @@ export default function Tweet(props) {
       </div>
       <li>
         {props.tweet.created_at.substr(8, 8)}{" "}
-        <i>
-          {props.tweet.retweeted_status ? props.tweet.user.screen_name : " "}
-        </i>{" "}
+        <Show when={props.tweet.retweeted_status}>
+          <i>{props.tweet.user.screen_name}</i>
+        </Show>{" "}
         <b>{tweet().user.screen_name}</b> {tweet().full_text}
         <ol>
           <For each={tweet().entities?.urls}>
