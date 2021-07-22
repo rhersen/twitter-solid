@@ -9,15 +9,14 @@ export default function Tweet(props) {
         <span
           class="countdown"
           onClick={async () => {
-            console.log("mark", props.tweet.id_str);
+            console.log("PUT", props.tweet.id_str);
             console.log(
-              "PUT",
               (
                 await fetch("/.netlify/functions/fauna", {
                   method: "PUT",
                   body: props.tweet.id_str,
                 })
-              ).statusText
+              ).status
             );
           }}
         >
