@@ -1,3 +1,5 @@
+import { Show } from "solid-js";
+
 export default function Tweet(props) {
   const tweet = () =>
     props.tweet.retweeted_status ? props.tweet.retweeted_status : props.tweet;
@@ -40,6 +42,9 @@ export default function Tweet(props) {
             )}
           </For>
         </ol>
+        <Show when={tweet().quoted_status}>
+          <div class="quoted">{tweet().quoted_status.full_text}</div>
+        </Show>
       </li>
     </>
   );
