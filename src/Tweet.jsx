@@ -1,4 +1,4 @@
-import { Show } from "solid-js";
+import { For, Show } from "solid-js";
 
 export default function Tweet(props) {
   const tweet = () =>
@@ -45,6 +45,15 @@ export default function Tweet(props) {
         <Show when={tweet().quoted_status}>
           <div class="quoted">{tweet().quoted_status.full_text}</div>
         </Show>
+        <ul>
+          <For each={tweet().extended_entities?.media}>
+            {(item) => (
+              <Show when={item.type === "photo"} fallback={<b>{item.type}</b>}>
+                <img src={`${item.media_url}:small`} />
+              </Show>
+            )}
+          </For>
+        </ul>
       </li>
     </>
   );
