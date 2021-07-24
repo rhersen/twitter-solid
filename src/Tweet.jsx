@@ -52,7 +52,11 @@ export default function Tweet(props) {
           <For each={tweet().extended_entities?.media}>
             {(item) => (
               <Show when={item.type === "photo"} fallback={<b>{item.type}</b>}>
-                <img src={`${item.media_url}:small`} />
+                <img
+                  src={`${item.media_url}:small`}
+                  width={item.sizes.small.w / devicePixelRatio}
+                  height={item.sizes.small.h / devicePixelRatio}
+                />
               </Show>
             )}
           </For>
