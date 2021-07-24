@@ -4,6 +4,8 @@ export default function Tweet(props) {
   const tweet = () =>
     props.tweet.retweeted_status ? props.tweet.retweeted_status : props.tweet;
 
+  const fullText = () => tweet().full_text.split("\n");
+
   return (
     <>
       <div class="stats">
@@ -30,7 +32,8 @@ export default function Tweet(props) {
         <Show when={props.tweet.retweeted_status}>
           <i>{props.tweet.user.screen_name}</i>
         </Show>{" "}
-        <b>{tweet().user.screen_name}</b> {tweet().full_text}
+        <b>{tweet().user.screen_name}</b>
+        <For each={fullText()}>{(p) => <p>{p}</p>}</For>
         <ol>
           <For each={tweet().entities?.urls}>
             {(url) => (
