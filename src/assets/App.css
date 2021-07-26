@@ -39,7 +39,6 @@ hr {
 
 .countdown {
   font-family: sans-serif;
-  position: relative;
 }
 
 table {
@@ -48,4 +47,27 @@ table {
 
 table td {
   border: 1px solid black;
+}
+
+.tweet {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.tweet > * {
+  grid-column: 1 / 4;
+}
+
+.tweet > .created-at {
+  grid-column: 1 / 2;
+}
+
+.tweet > i {
+  grid-column: 3 / 4;
+  justify-self: right;
+}
+
+.tweet > b {
+  grid-column: 2 / 3;
+  justify-self: center;
 }
