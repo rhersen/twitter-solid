@@ -23,6 +23,7 @@ export default function Tweet(props) {
               })
             ).status
           );
+          props.setMark(props.tweet);
         }}
       >
         mark

@@ -1,4 +1,4 @@
-import { createResource, For } from "solid-js";
+import { createResource, createSignal, For } from "solid-js";
 import Tweet from "./Tweet.jsx";
 
 async function fetchMarked() {
@@ -10,7 +10,9 @@ async function fetchTweets({ id_str }) {
 }
 
 function App() {
-  const [marked] = createResource(fetchMarked);
+  const [mark, setMark] = createSignal(undefined);
+  const [fauna] = createResource(fetchMarked);
+  const marked = () => mark() ?? fauna();
   const [tweets] = createResource(marked, fetchTweets);
 
   return (
@@ -20,9 +22,11 @@ function App() {
           ? "Laddar twitter..."
           : marked.loading
           ? "Laddar fauna..."
-          : tweets().length}
+          : tweets()?.length}
       </li>
-      <For each={tweets()?.reverse()}>{(tweet) => <Tweet tweet={tweet} />}</For>
+      <For each={tweets()?.reverse()}>
+        {(tweet) => <Tweet tweet={tweet} setMark={setMark} />}
+      </For>
     </ul>
   );
 }
