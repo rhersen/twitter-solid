@@ -28,23 +28,23 @@ export default function Tweet(props) {
       >
         mark
       </button>
-      <div class="created-at">{props.tweet.created_at.substr(8, 8)}</div>
+      <span class="created-at">{props.tweet.created_at.substr(8, 8)}</span>
       <b>{tweet().user.screen_name}</b>
       <Show when={props.tweet.retweeted_status}>
         <i>{props.tweet.user.screen_name}</i>
       </Show>
-      <For each={fullText()}>{(p) => <div>{p}</div>}</For>
+      <For each={fullText()}>{(text) => <span class="text">{text}</span>}</For>
       <For each={tweet().entities?.urls}>
         {(url) => (
-          <div class="url">
+          <span class="url">
             <a href={url.url} target="_blank">
               {url.display_url}
             </a>
-          </div>
+          </span>
         )}
       </For>
       <Show when={tweet().quoted_status}>
-        <div class="quoted">{tweet().quoted_status.full_text}</div>
+        <span class="quoted">{tweet().quoted_status.full_text}</span>
       </Show>
       <For each={tweet().extended_entities?.media}>
         {(item) => (

@@ -58,6 +58,14 @@ table td {
   grid-column: 1 / 4;
 }
 
+.tweet > button {
+  grid-column: 1;
+}
+
+.tweet > .text {
+  margin: 4px 0;
+}
+
 .tweet > .created-at {
   grid-column: 1 / 2;
 }
