@@ -6,7 +6,15 @@ async function fetchMarked() {
 }
 
 async function fetchTweets({ id_str }) {
-  return (await fetch(`/.netlify/functions/twitter?since_id=${id_str}`)).json();
+  const response = await fetch(
+    `/.netlify/functions/twitter?since_id=${id_str}`
+  );
+
+  if (!response.ok) {
+    console.error(await response.text());
+  } else {
+    return response.json();
+  }
 }
 
 function App() {

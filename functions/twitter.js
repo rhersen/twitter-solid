@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const Twitter = require("twitter");
 
 const client = new Twitter({
@@ -8,24 +7,17 @@ const client = new Twitter({
   access_token_secret: process.env.TWITTER_TOKEN_SECRET,
 });
 
-exports.handler = async function (
-  { queryStringParameters },
-  context,
-  callback
-) {
-  try {
-    const data = await client.get("statuses/home_timeline", {
-      tweet_mode: "extended",
-      exclude_replies: "true",
-      include_rts: "true",
-      since_id: queryStringParameters.since_id,
-      count: "200",
-    });
-    callback(undefined, {
-      statusCode: 200,
-      body: JSON.stringify(data),
-    });
-  } catch (error) {
-    callback(error && error.map((e) => e.message));
-  }
+exports.handler = async function ({ queryStringParameters: { since_id } }) {
+  const data = await client.get("statuses/home_timeline", {
+    tweet_mode: "extended",
+    exclude_replies: "true",
+    include_rts: "true",
+    since_id,
+    count: "200",
+  });
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(data),
+  };
 };
