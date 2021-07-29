@@ -7,8 +7,8 @@ const client = new Twitter({
   access_token_secret: process.env.TWITTER_TOKEN_SECRET,
 });
 
-exports.handler = async function ({ queryStringParameters: { since_id } }) {
-  const data = await client.get("statuses/home_timeline", {
+const getTweets = ({ since_id }) =>
+  client.get("statuses/home_timeline", {
     tweet_mode: "extended",
     exclude_replies: "true",
     include_rts: "true",
@@ -16,8 +16,19 @@ exports.handler = async function ({ queryStringParameters: { since_id } }) {
     count: "200",
   });
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(data),
-  };
+exports.handler = async function ({ queryStringParameters }) {
+  try {
+    return {
+      statusCode: 200,
+      body: JSON.stringify(await getTweets(queryStringParameters)),
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      statusCode: 500,
+      body: Array.isArray(err)
+        ? err.map((e) => e.message).join()
+        : err.toString(),
+    };
+  }
 };

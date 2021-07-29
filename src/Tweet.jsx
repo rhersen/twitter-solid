@@ -15,15 +15,16 @@ export default function Tweet(props) {
         class="countdown"
         onClick={async () => {
           console.log("PUT", props.tweet.id_str);
-          console.log(
-            (
-              await fetch("/.netlify/functions/fauna", {
-                method: "PUT",
-                body: props.tweet.id_str,
-              })
-            ).status
-          );
-          props.setMark(props.tweet);
+          const response = await fetch("/.netlify/functions/fauna", {
+            method: "PUT",
+            body: props.tweet.id_str,
+          });
+          if (response.ok) {
+            console.log(response.status);
+            props.setMark(props.tweet);
+          } else {
+            console.error(await response.text());
+          }
         }}
       >
         mark

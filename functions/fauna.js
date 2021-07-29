@@ -1,18 +1,17 @@
-/* eslint-disable no-undef */
 const faunadb = require("faunadb");
 
-const q = faunadb.query;
+const { Get, Index, Match, Replace } = faunadb.query;
 
 const faunaClient = new faunadb.Client({
-  secret: process.env.FAUNADB_SECRET
+  secret: process.env.FAUNADB_SECRET,
 });
 
 function lastRead() {
-  return faunaClient.query(q.Get(q.Match(q.Index("all_last_read"))));
+  return faunaClient.query(Get(Match(Index("all_last_read"))));
 }
 
 function mark(ref, id_str) {
-  return faunaClient.query(q.Replace(ref, { data: { id_str } }));
+  return faunaClient.query(Replace(ref, { data: { id_str } }));
 }
 
 exports.handler = async function ({ httpMethod, body }) {
@@ -26,7 +25,7 @@ exports.handler = async function ({ httpMethod, body }) {
 
       return {
         statusCode: 200,
-        body: JSON.stringify(response.data)
+        body: JSON.stringify(response.data),
       };
     }
 
@@ -36,14 +35,14 @@ exports.handler = async function ({ httpMethod, body }) {
       console.log("PUT ok at", Date(ts));
       return {
         statusCode: 200,
-        body: "ok"
+        body: "ok",
       };
     }
   } catch (err) {
     console.log(err); // output to netlify function log
     return {
       statusCode: err.requestResult ? err.requestResult.statusCode : 500,
-      body: err.message // Could be a custom message or object i.e.
+      body: err.message, // Could be a custom message or object i.e.
     };
   }
 };

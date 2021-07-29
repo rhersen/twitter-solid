@@ -2,7 +2,13 @@ import { createResource, createSignal, For } from "solid-js";
 import Tweet from "./Tweet.jsx";
 
 async function fetchMarked() {
-  return (await fetch("/.netlify/functions/fauna")).json();
+  const response = await fetch("/.netlify/functions/fauna");
+
+  if (!response.ok) {
+    console.error(await response.text());
+  } else {
+    return response.json();
+  }
 }
 
 async function fetchTweets({ id_str }) {
