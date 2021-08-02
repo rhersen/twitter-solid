@@ -47,7 +47,7 @@ export default function Tweet(props) {
         )}
       </For>
       <Show when={tweet().quoted_status}>
-        <span class="quoted">{tweet().quoted_status.full_text}</span>
+        <span class="quoted" innerHTML={tweet().quoted_status.full_text} />
       </Show>
       <For each={tweet().extended_entities?.media}>
         {(item) => (
