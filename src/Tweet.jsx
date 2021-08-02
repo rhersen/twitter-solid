@@ -34,7 +34,9 @@ export default function Tweet(props) {
       <Show when={props.tweet.retweeted_status}>
         <i>{props.tweet.user.screen_name}</i>
       </Show>
-      <For each={fullText()}>{(text) => <span class="text" innerHTML={text} />}</For>
+      <For each={fullText()}>
+        {(text) => <span class="text" innerHTML={text} />}
+      </For>
       <For each={tweet().entities?.urls}>
         {(url) => (
           <span class="url">
@@ -54,6 +56,7 @@ export default function Tweet(props) {
               src={`${item.media_url}:small`}
               width={item.sizes.small.w / devicePixelRatio}
               height={item.sizes.small.h / devicePixelRatio}
+              alt={item.type}
             />
           </Show>
         )}
