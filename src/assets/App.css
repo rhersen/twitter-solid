@@ -2,6 +2,12 @@ ul {
   list-style: none;
   padding-left: 0;
   margin: 0 auto;
+  transition-duration: 1s;
+  transition-property: background-color;
+}
+
+ul.dim {
+  background-color: black;
 }
 
 .quoted {

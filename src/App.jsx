@@ -16,6 +16,9 @@ async function fetchTweets({ id_str }) {
     `/.netlify/functions/twitter?since_id=${id_str}`
   );
 
+  scrollTo({ top: 0 });
+  document.getElementById("tweets").classList.remove("dim");
+
   if (!response.ok) {
     console.error(await response.text());
   } else {
@@ -30,7 +33,7 @@ function App() {
   const [tweets] = createResource(marked, fetchTweets);
 
   return (
-    <ul class="tweets">
+    <ul id="tweets">
       <li>
         {tweets.loading
           ? "Laddar twitter..."

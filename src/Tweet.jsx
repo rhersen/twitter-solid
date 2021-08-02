@@ -14,6 +14,7 @@ export default function Tweet(props) {
       <button
         class="countdown"
         onClick={async () => {
+          document.getElementById("tweets").classList.add("dim");
           console.log("PUT", props.tweet.id_str);
           const response = await fetch("/.netlify/functions/fauna", {
             method: "PUT",
