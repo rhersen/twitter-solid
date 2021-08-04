@@ -65,7 +65,8 @@ table td {
 }
 
 .tweet > button {
-  grid-column: 1;
+  grid-column: 2;
+  margin: 16px 0;
 }
 
 .tweet > .text {

@@ -11,25 +11,6 @@ export default function Tweet(props) {
 
   return (
     <div class="tweet">
-      <button
-        class="countdown"
-        onClick={async () => {
-          document.getElementById("tweets").classList.add("dim");
-          console.log("PUT", props.tweet.id_str);
-          const response = await fetch("/.netlify/functions/fauna", {
-            method: "PUT",
-            body: props.tweet.id_str,
-          });
-          if (response.ok) {
-            console.log(response.status);
-            props.setMark(props.tweet);
-          } else {
-            console.error(await response.text());
-          }
-        }}
-      >
-        mark
-      </button>
       <span class="created-at">{props.tweet.created_at.substr(8, 8)}</span>
       <b>{tweet().user.screen_name}</b>
       <Show when={props.tweet.retweeted_status}>
@@ -62,6 +43,25 @@ export default function Tweet(props) {
           </Show>
         )}
       </For>
+      <button
+        class="countdown"
+        onClick={async () => {
+          document.getElementById("tweets").classList.add("dim");
+          console.log("PUT", props.tweet.id_str);
+          const response = await fetch("/.netlify/functions/fauna", {
+            method: "PUT",
+            body: props.tweet.id_str,
+          });
+          if (response.ok) {
+            console.log(response.status);
+            props.setMark(props.tweet);
+          } else {
+            console.error(await response.text());
+          }
+        }}
+      >
+        mark
+      </button>
     </div>
   );
 }
