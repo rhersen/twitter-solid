@@ -11,7 +11,13 @@ export default function Tweet(props) {
 
   return (
     <div class="tweet">
-      <span class="created-at">{props.tweet.created_at.substr(8, 8)}</span>
+      <a
+        class="created-at"
+        href={`https://twitter.com/${props.tweet.user.screen_name}/status/${props.tweet.id_str}`}
+        target="_blank"
+      >
+        {props.tweet.created_at.substr(8, 8)}
+      </a>
       <b>{tweet().user.screen_name}</b>
       <Show when={props.tweet.retweeted_status}>
         <i>{props.tweet.user.screen_name}</i>
