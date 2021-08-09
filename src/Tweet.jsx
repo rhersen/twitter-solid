@@ -1,4 +1,4 @@
-import { For, Show } from "solid-js";
+import { For, Show, Switch, Match } from "solid-js";
 
 export default function Tweet(props) {
   const tweet = () =>
@@ -39,16 +39,30 @@ export default function Tweet(props) {
       </Show>
       <For each={tweet().extended_entities?.media}>
         {(item) => (
-          <Show when={item.type === "photo"} fallback={<b>{item.type}</b>}>
-            <a href={`${item.media_url}:large`} target="_blank">
-              <img
-                src={`${item.media_url}:small`}
-                width={item.sizes.small.w / devicePixelRatio}
-                height={item.sizes.small.h / devicePixelRatio}
-                alt={item.type}
-              />
-            </a>
-          </Show>
+          <Switch fallback={<b>{item.type}</b>}>
+            <Match when={item.type === "photo"}>
+              <a href={`${item.media_url}:large`} target="_blank">
+                <img
+                  src={`${item.media_url}:small`}
+                  width={item.sizes.small.w / devicePixelRatio}
+                  height={item.sizes.small.h / devicePixelRatio}
+                  alt={item.type}
+                />
+              </a>
+            </Match>
+            <Match when={item.type === "video"}>
+              <a href={`${item.media_url}:large`} target="_blank">
+                <div>▶️</div>
+                <img
+                  src={`${item.media_url}:small`}
+                  width={item.sizes.small.w / devicePixelRatio}
+                  height={item.sizes.small.h / devicePixelRatio}
+                  alt={item.type}
+                />
+                <div>▶️</div>
+              </a>
+            </Match>
+          </Switch>
         )}
       </For>
       <button
