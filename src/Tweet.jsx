@@ -52,16 +52,24 @@ export default function Tweet(props) {
             </Match>
             <Match when={item.type === "video"}>
               <a href={`${item.media_url}:large`} target="_blank">
-                <div>▶️</div>
-                <img
-                  src={`${item.media_url}:small`}
-                  width={item.sizes.small.w / devicePixelRatio}
-                  height={item.sizes.small.h / devicePixelRatio}
-                  alt={item.type}
-                />
-                <div>▶️</div>
+                <div>{item.type}</div>
+                <video controls>
+                  <source
+                    src={item.video_info?.variants[1].url}
+                    type={item.video_info?.variants[1].content_type}
+                  />
+                </video>
+                <div>{item.type}</div>
               </a>
             </Match>
+            <Match when={item.type === "animated_gif"}>
+              <video controls>
+                <source
+                  src={item.video_info?.variants[0].url}
+                  type={item.video_info?.variants[0].content_type}
+                />
+              </video>
+            </Match>{" "}
           </Switch>
         )}
       </For>
