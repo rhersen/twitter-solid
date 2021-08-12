@@ -50,26 +50,17 @@ export default function Tweet(props) {
                 />
               </a>
             </Match>
-            <Match when={item.type === "video"}>
-              <a href={`${item.media_url}:large`} target="_blank">
-                <div>{item.type}</div>
-                <video controls>
-                  <source
-                    src={item.video_info?.variants[1].url}
-                    type={item.video_info?.variants[1].content_type}
-                  />
-                </video>
-                <div>{item.type}</div>
-              </a>
+            <Match when={item.type === "video" || item.type === "animated_gif"}>
+              <div>
+                <For each={item.video_info?.variants}>
+                  {(variant) => (
+                    <a href={variant.url} target="_blank">
+                      | {variant.bitrate} |
+                    </a>
+                  )}
+                </For>
+              </div>
             </Match>
-            <Match when={item.type === "animated_gif"}>
-              <video controls>
-                <source
-                  src={item.video_info?.variants[0].url}
-                  type={item.video_info?.variants[0].content_type}
-                />
-              </video>
-            </Match>{" "}
           </Switch>
         )}
       </For>
