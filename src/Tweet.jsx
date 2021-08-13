@@ -54,9 +54,12 @@ export default function Tweet(props) {
               <div>
                 <For each={item.video_info?.variants}>
                   {(variant) => (
-                    <a href={variant.url} target="_blank">
-                      | {variant.bitrate} |
-                    </a>
+                    <span>
+                      {" "}
+                      <a href={variant.url} target="_blank">
+                        {variant.bitrate}
+                      </a>
+                    </span>
                   )}
                 </For>
               </div>
