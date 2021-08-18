@@ -52,6 +52,14 @@ export default function Tweet(props) {
             </Match>
             <Match when={item.type === "video" || item.type === "animated_gif"}>
               <div>
+                <div>
+                  <img
+                    src={`${item.media_url}:small`}
+                    width={item.sizes.small.w / devicePixelRatio}
+                    height={item.sizes.small.h / devicePixelRatio}
+                    alt={item.type}
+                  />
+                </div>
                 <For each={item.video_info?.variants}>
                   {(variant) => (
                     <span>
