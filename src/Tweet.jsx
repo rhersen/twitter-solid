@@ -1,14 +1,11 @@
 import { For, Show } from "solid-js";
 import Media from "./Media.jsx";
 
+const toHtml = ({ full_text }) => full_text.replace(/\n/g, "<br />");
+
 export default function Tweet(props) {
   const tweet = () =>
     props.tweet.retweeted_status ? props.tweet.retweeted_status : props.tweet;
-
-  const fullText = () =>
-    tweet()
-      .full_text.split("\n")
-      .filter((x) => x);
 
   return (
     <div class="tweet">
@@ -23,9 +20,7 @@ export default function Tweet(props) {
       <Show when={props.tweet.retweeted_status}>
         <i>{props.tweet.user.screen_name}</i>
       </Show>
-      <For each={fullText()}>
-        {(text) => <span class="text" innerHTML={text} />}
-      </For>
+      <span class="text" innerHTML={toHtml(tweet())} />
       <For each={tweet().entities?.urls}>
         {(url) => (
           <span class="url">
@@ -36,7 +31,7 @@ export default function Tweet(props) {
         )}
       </For>
       <Show when={tweet().quoted_status}>
-        <span class="quoted" innerHTML={tweet().quoted_status.full_text} />
+        <span class="quoted" innerHTML={toHtml(tweet().quoted_status)} />
       </Show>
       <For each={tweet().extended_entities?.media}>
         {(item) => (
