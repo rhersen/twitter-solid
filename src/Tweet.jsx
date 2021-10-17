@@ -50,7 +50,7 @@ export default function Tweet(props) {
           console.log("PUT", props.tweet.id_str);
           const response = await fetch("/.netlify/functions/fauna", {
             method: "PUT",
-            body: props.tweet.id_str,
+            body: JSON.stringify({ id_str: props.tweet.id_str }),
           });
           if (response.ok) {
             console.log(response.status);

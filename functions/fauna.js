@@ -10,8 +10,8 @@ function lastRead() {
   return faunaClient.query(Get(Match(Index("all_last_read"))));
 }
 
-function mark(ref, id_str) {
-  return faunaClient.query(Replace(ref, { data: { id_str } }));
+function mark(ref, data) {
+  return faunaClient.query(Replace(ref, { data }));
 }
 
 exports.handler = async function ({ httpMethod, body }) {
@@ -31,7 +31,7 @@ exports.handler = async function ({ httpMethod, body }) {
 
     if (httpMethod === "PUT") {
       const { ref } = await lastRead();
-      const { ts } = await mark(ref, body);
+      const { ts } = await mark(ref, JSON.parse(body));
       console.log("PUT ok at", Date(ts));
       return {
         statusCode: 200,
