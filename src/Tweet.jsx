@@ -47,10 +47,11 @@ export default function Tweet(props) {
         class="countdown"
         onClick={async () => {
           document.getElementById("tweets").classList.add("dim");
-          console.log("PUT", props.tweet.id_str);
+          const { id_str, created_at } = props.tweet;
+          console.log("PUT", { id_str, created_at });
           const response = await fetch("/.netlify/functions/fauna", {
             method: "PUT",
-            body: JSON.stringify({ id_str: props.tweet.id_str }),
+            body: JSON.stringify({ id_str, created_at }),
           });
           if (response.ok) {
             console.log(response.status);
