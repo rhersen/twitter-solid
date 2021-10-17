@@ -39,7 +39,7 @@ function App() {
           ? "Laddar twitter..."
           : marked.loading
           ? "Laddar fauna..."
-          : tweets()?.length}
+          : `${tweets()?.length} | ${fauna()?.created_at?.substr(8, 8)}`}
       </li>
       <For each={tweets()?.reverse()}>
         {(tweet) => <Tweet tweet={tweet} setMark={setMark} />}
